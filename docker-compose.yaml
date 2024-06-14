@@ -1,11 +1,23 @@
 services:
   flask-app:
+    image: flask-app:1.0.0
+    container_name: flask_app_container
     build:
       context: .
-    #ports:
-    #  - 8888:8888
+      dockerfile: Dockerfile
+      args:
+        # Use user id & group id in .env
+        USER_ID: ${USER_ID:-0}
+        GROUP_ID: ${GROUP_ID:-0}
+    user: ${USER_ID}:${GROUP_ID}
+    ports:
+      - 8888:8888
     volumes:
       - ./src:/app
+      # Set the logins and groups identical to host environment
+      - /etc/group:/etc/group:ro
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/shadow:/etc/shadow:ro
 
   nginx:
     image: nginx:1.27.0-alpine

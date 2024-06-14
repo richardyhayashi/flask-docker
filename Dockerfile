@@ -1,4 +1,4 @@
-FROM python:3.12.3-alpine
+FROM python:3.12.4-alpine
 
 ENV LANG="C.UTF-8"
 
@@ -8,9 +8,6 @@ WORKDIR /app
 # Copy requirments.txt & install.
 COPY ./requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy src folder.
-#COPY ./src .
 
 EXPOSE 8888
 
